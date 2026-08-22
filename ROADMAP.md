@@ -7,6 +7,8 @@ Validator escapen beziehungsweise validieren kontextbezogen, die Admin-Demo
 prüft Capability und Nonce, Fokuszustände sind vorgesehen und beide CLI-Smokes
 bestehen. Der große öffentliche UI-Vertrag, JavaScript und reale
 Barrierefreiheit sind noch nicht durch Verbraucher-/Browsertests abgesichert.
+Demo-Formularwerte verwenden ausschließlich reservierte Beispieldaten; ein
+Privacy-Smoke verhindert reale Organisationsadressen in dieser Oberfläche.
 
 ## P1
 

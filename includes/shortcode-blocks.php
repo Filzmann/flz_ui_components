@@ -228,12 +228,60 @@ function flz_ui_shortcode_block_editor_fields(array $attributes, array $fields):
 
         $field = isset($fields[$name]) && is_array($fields[$name]) ? $fields[$name] : array();
         $type = isset($definition['type']) ? (string) $definition['type'] : 'string';
+        $control = isset($field['control']) ? (string) $field['control'] : ('boolean' === $type ? 'toggle' : 'text');
+        if (!in_array($control, array('text', 'toggle', 'select'), true)) {
+            $control = 'text';
+        }
 
-        $result[] = array(
+        $editor_field = array(
             'name'        => (string) $name,
             'label'       => isset($field['label']) ? (string) $field['label'] : ucwords(str_replace('_', ' ', (string) $name)),
             'description' => isset($field['description']) ? (string) $field['description'] : '',
-            'control'     => isset($field['control']) ? (string) $field['control'] : ('boolean' === $type ? 'toggle' : 'text'),
+            'control'     => $control,
+        );
+
+        if ('select' === $control) {
+            $editor_field['options'] = flz_ui_shortcode_block_editor_select_options(
+                isset($field['options']) && is_array($field['options']) ? $field['options'] : array()
+            );
+        }
+
+        $result[] = $editor_field;
+    }
+
+    return $result;
+}
+
+/**
+ * Normalisiert Select-Optionen für WordPress SelectControl.
+ *
+ * Assoziative Arrays verwenden den Schlüssel als Wert und den Eintrag als
+ * sichtbares Label. Alternativ sind Arrays mit `value` und `label` erlaubt.
+ *
+ * @param array<mixed,mixed> $options Select-Optionen des Verbraucherplugins.
+ *
+ * @return array<int,array{value:string,label:string}>
+ */
+function flz_ui_shortcode_block_editor_select_options(array $options): array
+{
+    $result = array();
+
+    foreach ($options as $value => $label) {
+        if (is_array($label)) {
+            if (!isset($label['value'], $label['label'])) {
+                continue;
+            }
+            $value = $label['value'];
+            $label = $label['label'];
+        }
+
+        if (!is_scalar($value) || !is_scalar($label)) {
+            continue;
+        }
+
+        $result[] = array(
+            'value' => (string) $value,
+            'label' => (string) $label,
         );
     }
 

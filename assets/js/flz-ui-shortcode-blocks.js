@@ -13,6 +13,7 @@
   var PanelBody = wp.components && wp.components.PanelBody;
   var TextControl = wp.components && wp.components.TextControl;
   var ToggleControl = wp.components && wp.components.ToggleControl;
+  var SelectControl = wp.components && wp.components.SelectControl;
 
   function shortcodePreview(config, attributes) {
     var parts = ['[', config.shortcode || 'shortcode'];
@@ -80,6 +81,21 @@
               onChange: function (nextValue) {
                 var update = {};
                 update[field.name] = Boolean(nextValue);
+                props.setAttributes(update);
+              }
+            });
+          }
+
+          if (field.control === 'select' && SelectControl) {
+            return createElement(SelectControl, {
+              key: field.name,
+              label: field.label || field.name,
+              help: field.description || '',
+              value: value === undefined || value === null ? '' : String(value),
+              options: Array.isArray(field.options) ? field.options : [],
+              onChange: function (nextValue) {
+                var update = {};
+                update[field.name] = nextValue;
                 props.setAttributes(update);
               }
             });

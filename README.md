@@ -1,4 +1,4 @@
-# FLZ UI Components 0.1.11
+# FLZ UI Components 0.1.12
 
 `flz_ui_components` stellt gemeinsame UI-Bausteine für die eigenen Tagore-Plugins bereit. Das Plugin ist bewusst klein gehalten: normale PHP-Templates bleiben normale PHP-Templates, bekommen aber zentrale Renderer, einheitliche Klassen, gemeinsame Formularvalidierung und wiederverwendbare Assets.
 
@@ -46,11 +46,23 @@ flz_ui_register_shortcode_block(
                 'type'    => 'string',
                 'default' => '',
             ),
+            'variante' => array(
+                'type'    => 'string',
+                'default' => 'kompakt',
+            ),
         ),
         'fields'      => array(
             'danke' => array(
                 'label'       => 'Danke-Seite-ID',
                 'description' => 'Optionaler Redirect nach erfolgreicher Aktion.',
+            ),
+            'variante' => array(
+                'label'   => 'Variante',
+                'control' => 'select',
+                'options' => array(
+                    'kompakt' => 'Kompakt',
+                    'breit'   => 'Breit',
+                ),
             ),
         ),
     )

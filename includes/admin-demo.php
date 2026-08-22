@@ -75,14 +75,14 @@ function flz_ui_components_demo_defaults(): array
 {
     return array(
         'demo_text'     => 'AG Schach',
-        'demo_email'    => 'info@tagore-gymnasium.de',
+        'demo_email'    => 'demo-ui@example.test',
         'demo_password' => '',
         'demo_date'     => gmdate('Y-m-d'),
         'demo_time'     => '14:30',
         'demo_datetime' => gmdate('Y-m-d') . 'T14:30',
         'demo_number'   => '12',
         'demo_integer'  => '7',
-        'demo_url'      => 'https://tagore-gymnasium.de/',
+        'demo_url'      => 'https://example.test/',
         'demo_tel'      => '+49 30 123456',
         'demo_textarea' => 'Kurzer Beschreibungstext für ein Formularfeld.',
         'demo_select'   => 'secondary',
@@ -385,7 +385,7 @@ function flz_ui_components_demo_render_editable_rows(Flz_Ui_Components_Renderer 
             'details' => array(
                 'label'  => 'Zusatzdaten',
                 'fields' => array(
-                    array('type' => 'email', 'name' => 'demo_row[email]', 'label' => 'Kontakt', 'value' => 'info@tagore-gymnasium.de'),
+                    array('type' => 'email', 'name' => 'demo_row[email]', 'label' => 'Kontakt', 'value' => 'demo-ui@example.test'),
                     array('type' => 'textarea', 'name' => 'demo_row[note]', 'label' => 'Notiz', 'value' => 'Detailfelder brauchen keine eigene Seitenleiste.'),
                 ),
             ),
