@@ -2,12 +2,16 @@
 
 ## Prüfstatus
 
-**Release Candidate 0.2.0 / keine offenen P0- oder P1-Befunde.** Renderer,
+**Funktionsstand 0.2.0 ohne offene P0-/P1-Befunde; Release-Gate in
+Übernahmephase 0 blockiert.** Renderer,
 Validator, Admin-Demo, dynamische Shortcode-Blöcke, Select-Felder,
 bedarfsgesteuerte Assets und CSP-freundliche Bestätigungen werden durch
 CLI-Smokes abgesichert. Die drei Fachverbraucher registrieren die Assets vor
 ihren eigenen Styles und laden sie nur auf passenden Requests. Demo-Werte
-verwenden ausschließlich reservierte Beispieldaten.
+verwenden ausschließlich reservierte Beispieldaten. Vor einem Tag fehlen CI,
+getrennte PHP-/JavaScript-No-Regression-Coverage, die ausgefüllte Browser- und
+Accessibility-Abnahme sowie ein reproduzierbar geprüftes Release-Artefakt.
+Das Protokoll liegt unter `docs/manual-acceptance.md`.
 
 ## P1
 

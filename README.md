@@ -2,6 +2,11 @@
 
 `flz_ui_components` stellt gemeinsame UI-Bausteine für die eigenen Tagore-Plugins bereit. Das Plugin ist bewusst klein gehalten: normale PHP-Templates bleiben normale PHP-Templates, bekommen aber zentrale Renderer, einheitliche Klassen, gemeinsame Formularvalidierung und wiederverwendbare Assets.
 
+Der BR-starke Commit-/Coverage-/Releasevertrag wird schrittweise übernommen;
+bis zum grünen lokalen Gate bleibt ein Release blockiert. Das ausfüllbare
+[Abnahmeprotokoll](docs/manual-acceptance.md) deckt insbesondere Browser,
+Tastatur, Screenreader, Responsive-Verhalten und Verbraucher ab.
+
 ## Neu in 0.2.0
 
 - CSS und JavaScript werden global nur registriert und erst bei Verwendung
