@@ -27,6 +27,18 @@ genau ein Ergebnis markieren und Abweichungen begründen.
 
 ## Manuelle Prüffälle
 
+### Technischer ZIP-Teilnachweis vom 22. August 2026
+
+- Umgebung: DDEV, WordPress 7.1, PHP 8.3, MariaDB 10.11.
+- Exaktes Artefakt: `flz_ui_components-0.2.0.zip`, Commit
+  `b68ddee9ec65b46e6b6196b5d9792a7116f60766`, SHA-256
+  `eef019e280204256f7c453d961328de83942f6469850e30a2009b8c4a0649a65`.
+- Reproduzierbarkeit, Archivvertrag und installierter Dateibaum sowie
+  WP-CLI-Installation, Aktivstatus, Deaktivierung, Reaktivierung und HTTP 200
+  waren erfolgreich. Snapshot- und Symlink-Rückbau waren erfolgreich.
+- Noch nicht belegt: saubere Frischinstallation, Browser-, Tastatur-,
+  Responsive-, Kontrast- und Verbraucher-Sichtprüfung.
+
 | ID | Prüfschritte | Erwartetes Ergebnis | Ergebnis | Warum / Beleg / Abweichung |
 |---|---|---|---|---|
 | UI-01 | Normale Seite ohne FLZ-Komponente öffnen und Assets prüfen. | UI-CSS und -JavaScript werden nicht geladen. | [ ] erfolgreich [ ] nicht erfolgreich [ ] nicht geprüft | |
