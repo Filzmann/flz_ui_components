@@ -2,10 +2,17 @@
 
 `flz_ui_components` stellt gemeinsame UI-Bausteine für die eigenen Tagore-Plugins bereit. Das Plugin ist bewusst klein gehalten: normale PHP-Templates bleiben normale PHP-Templates, bekommen aber zentrale Renderer, einheitliche Klassen, gemeinsame Formularvalidierung und wiederverwendbare Assets.
 
-Der BR-starke Commit-/Coverage-/Releasevertrag wird schrittweise übernommen;
-bis zum grünen lokalen Gate bleibt ein Release blockiert. Das ausfüllbare
+Commit-, CI- und Coverage-Gates sind in Übernahmephase 2 enforced. Ein Release
+bleibt bis zur ausgefüllten Abnahme sowie zur Installation und zum Rückbau aus
+dem exakten Artefakt blockiert. Das ausfüllbare
 [Abnahmeprotokoll](docs/manual-acceptance.md) deckt insbesondere Browser,
 Tastatur, Screenreader, Responsive-Verhalten und Verbraucher ab.
+
+Ein sauberer Commit wird reproduzierbar paketiert mit:
+
+```bash
+./scripts/build-release /tmp/flz_ui_components-release
+```
 
 ## Neu in 0.2.0
 
