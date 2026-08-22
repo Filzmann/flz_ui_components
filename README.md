@@ -1,6 +1,16 @@
-# FLZ UI Components 0.1.12
+# FLZ UI Components 0.2.0
 
 `flz_ui_components` stellt gemeinsame UI-Bausteine für die eigenen Tagore-Plugins bereit. Das Plugin ist bewusst klein gehalten: normale PHP-Templates bleiben normale PHP-Templates, bekommen aber zentrale Renderer, einheitliche Klassen, gemeinsame Formularvalidierung und wiederverwendbare Assets.
+
+## Neu in 0.2.0
+
+- CSS und JavaScript werden global nur registriert und erst bei Verwendung
+  einer Komponente oder über `flz_ui_components_enqueue_assets()` geladen.
+- Bestätigungsdialoge verwenden `data-flz-ui-confirm` und einen delegierten
+  JavaScript-Handler statt Inline-`onclick`; frei übergebene `on*`-Attribute
+  werden nicht gerendert.
+- `data-flz-ui-submit-on-change` löst Select-Filter ohne Inline-JavaScript aus.
+- Asset-, JavaScript- und Renderer-Smokes sichern den öffentlichen Vertrag ab.
 
 ## Installation lokal
 

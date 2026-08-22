@@ -2,14 +2,14 @@
 /**
  * Plugin Name: FLZ UI Components
  * Description: Gemeinsame UI-Komponenten, Formularfelder und Validierung für eigene Tagore-Plugins.
- * Version: 0.1.12
+ * Version: 0.2.0
  * Author: Tagore-Gymnasium / Simon
  * Text Domain: flz-ui-components
  */
 
 defined('ABSPATH') || exit;
 
-define('FLZ_UI_COMPONENTS_VERSION', '0.1.12');
+define('FLZ_UI_COMPONENTS_VERSION', '0.2.0');
 define('FLZ_UI_COMPONENTS_FILE', __FILE__);
 define('FLZ_UI_COMPONENTS_DIR', plugin_dir_path(__FILE__));
 define('FLZ_UI_COMPONENTS_URL', plugins_url('flz_ui_components/'));
@@ -20,28 +20,28 @@ require_once FLZ_UI_COMPONENTS_DIR . 'includes/class-flz-ui-components-renderer.
 require_once FLZ_UI_COMPONENTS_DIR . 'includes/shortcode-blocks.php';
 require_once FLZ_UI_COMPONENTS_DIR . 'includes/admin-demo.php';
 
-add_action('wp_enqueue_scripts', 'flz_ui_components_enqueue_assets');
-add_action('admin_enqueue_scripts', 'flz_ui_components_enqueue_assets');
+add_action('wp_enqueue_scripts', 'flz_ui_components_register_assets', 5);
+add_action('admin_enqueue_scripts', 'flz_ui_components_register_assets', 5);
 add_action('admin_menu', 'flz_ui_components_register_admin_demo_page');
 add_filter('block_categories_all', 'flz_ui_components_register_block_category');
 add_filter('block_categories', 'flz_ui_components_register_block_category');
 
 /**
- * Lädt die gemeinsamen UI-Assets.
+ * Registriert die gemeinsamen UI-Assets, ohne sie global zu laden.
  *
  * Das CSS ist bewusst komponentenbezogen und nutzt nur flz-ui-* Klassen, damit
  * es vorhandene WordPress- oder Theme-Styles möglichst wenig beeinflusst.
  */
-function flz_ui_components_enqueue_assets(): void
+function flz_ui_components_register_assets(): void
 {
-    wp_enqueue_style(
+	wp_register_style(
         'flz-ui-components',
         FLZ_UI_COMPONENTS_URL . 'assets/css/flz-ui-components.css',
         array(),
         FLZ_UI_COMPONENTS_VERSION
     );
 
-    wp_enqueue_script(
+	wp_register_script(
         'flz-ui-components',
         FLZ_UI_COMPONENTS_URL . 'assets/js/flz-ui-components.js',
         array(),
@@ -51,11 +51,30 @@ function flz_ui_components_enqueue_assets(): void
 }
 
 /**
+ * Lädt die gemeinsamen UI-Assets erst nach explizitem Komponentenbedarf.
+ */
+function flz_ui_components_enqueue_assets(): void
+{
+	static $enqueued = false;
+
+	if ($enqueued) {
+		return;
+	}
+
+	flz_ui_components_register_assets();
+	wp_enqueue_style('flz-ui-components');
+	wp_enqueue_script('flz-ui-components');
+	$enqueued = true;
+}
+
+/**
  * Gibt den zentralen Renderer für Templates zurück.
  */
 function flz_ui_components(): Flz_Ui_Components_Renderer
 {
     static $renderer = null;
+
+	flz_ui_components_enqueue_assets();
 
     if (!$renderer instanceof Flz_Ui_Components_Renderer) {
         $renderer = new Flz_Ui_Components_Renderer();

@@ -110,7 +110,8 @@ $delete_button = $renderer->button_delete(array('label' => 'Eintrag löschen'));
 flz_ui_components_renderer_assert(false !== strpos($delete_button, 'flz-ui-button--danger'), 'Löschen-Button nutzt nicht die Danger-Variante.');
 flz_ui_components_renderer_assert(false !== strpos($delete_button, 'aria-label="Eintrag löschen"'), 'Löschen-Button nutzt keinen funktionalen Alt-Text.');
 flz_ui_components_renderer_assert(false !== strpos($delete_button, 'type="submit"'), 'Löschen-Button sendet Formulare nicht standardmäßig ab.');
-flz_ui_components_renderer_assert(false !== strpos($delete_button, 'window.confirm'), 'Löschen-Button hat keine Sicherheitsabfrage.');
+flz_ui_components_renderer_assert(false !== strpos($delete_button, 'data-flz-ui-confirm='), 'Löschen-Button hat keine deklarative Sicherheitsabfrage.');
+flz_ui_components_renderer_assert(false === strpos($delete_button, 'onclick='), 'Löschen-Button enthält weiterhin einen CSP-unsicheren Inline-Handler.');
 
 $upload_button = $renderer->button_upload(array('label' => 'CSV importieren'));
 flz_ui_components_renderer_assert(false !== strpos($upload_button, 'flz-ui-button--warning'), 'Upload-/Import-Button nutzt nicht die Warning-Variante.');
@@ -228,7 +229,17 @@ $action_form = $renderer->action_form_button(
 );
 flz_ui_components_renderer_assert(false !== strpos($action_form, '<form'), 'Action Form rendert kein Formular.');
 flz_ui_components_renderer_assert(false !== strpos($action_form, 'name="record_id"'), 'Action Form übernimmt Hidden Fields nicht.');
-flz_ui_components_renderer_assert(false !== strpos($action_form, 'window.confirm'), 'Action Form übernimmt riskantes Button-Preset nicht.');
+flz_ui_components_renderer_assert(false !== strpos($action_form, 'data-flz-ui-confirm='), 'Action Form übernimmt riskantes Button-Preset nicht.');
+flz_ui_components_renderer_assert(false === strpos($action_form, 'onclick='), 'Action Form enthält weiterhin einen Inline-Handler.');
+
+$unsafe_button = $renderer->button(
+    array(
+        'label' => 'Unsicher',
+        'attrs' => array('onclick' => 'alert(document.cookie)', 'onfocus' => 'alert(1)'),
+    )
+);
+flz_ui_components_renderer_assert(false === strpos($unsafe_button, 'onclick='), 'Ein frei übergebenes onclick-Attribut wurde gerendert.');
+flz_ui_components_renderer_assert(false === strpos($unsafe_button, 'onfocus='), 'Ein frei übergebenes onfocus-Attribut wurde gerendert.');
 
 $floating_panel = $renderer->floating_action_panel(
     array(

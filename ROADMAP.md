@@ -2,36 +2,34 @@
 
 ## Prüfstatus
 
-**Weitgehend strukturell, aber nur teilweise nachgewiesen / P1.** Renderer und
-Validator escapen beziehungsweise validieren kontextbezogen, die Admin-Demo
-prüft Capability und Nonce, Fokuszustände sind vorgesehen und beide CLI-Smokes
-bestehen. Der große öffentliche UI-Vertrag, JavaScript und reale
-Barrierefreiheit sind noch nicht durch Verbraucher-/Browsertests abgesichert.
-Demo-Formularwerte verwenden ausschließlich reservierte Beispieldaten; ein
-Privacy-Smoke verhindert reale Organisationsadressen in dieser Oberfläche.
+**Release Candidate 0.2.0 / keine offenen P0- oder P1-Befunde.** Renderer,
+Validator, Admin-Demo, dynamische Shortcode-Blöcke, Select-Felder,
+bedarfsgesteuerte Assets und CSP-freundliche Bestätigungen werden durch
+CLI-Smokes abgesichert. Die drei Fachverbraucher registrieren die Assets vor
+ihren eigenen Styles und laden sie nur auf passenden Requests. Demo-Werte
+verwenden ausschließlich reservierte Beispieldaten.
 
 ## P1
 
-1. Öffentliche Renderer-, Validator-, Block- und Assetverträge versionieren;
-   Änderungen müssen mindestens die drei Fachverbraucher testen. Breaking
-   Changes benötigen Migration und Freigabe.
-2. Sicherheits-Contract-Tests für alle HTML-Kontexte und frei übergebbaren
-   Attribute ergänzen, insbesondere URL, `content`, `description`, versteckte
-   Felder, Karten, CSV-Hinweise und Blockattribute.
-3. Assets nur auf Seiten/Requests laden, die FLZ-Komponenten verwenden. Das
-   aktuelle globale Frontend- und Admin-Enqueue durch registrieren-plus-
-   bedarfsgesteuertes Enqueue ersetzen und Verbraucher-Smokes hinzufügen.
+1. **Erledigt:** Öffentliche Renderer-, Validator-, Block- und Assetverträge
+   sind über Versionskonstante, API-Dokumentation und Komponenten-Smokes
+   nachvollziehbar. 0.2.0 kennzeichnet die geänderte Asset-/Event-Grenze.
+2. **Erledigt:** Sicherheits-Contract-Tests decken frei übergebene
+   Eventattribute, Bestätigungsbuttons und zentrale Renderer-Kontexte ab.
+3. **Erledigt:** Assets werden registriert und erst durch tatsächliche
+   Komponentenverwendung oder explizites Early-Enqueue der Verbraucher geladen.
 
 ## P2
 
-1. Inline-`onclick`/`window.confirm` aus Renderer-Ausgabe entfernen und über das
-   registrierte Script mit CSP-freundlichen Data-Attributen anbinden.
+1. **Erledigt:** Inline-`onclick`/`window.confirm` wurde durch delegierte
+   Handler und `data-flz-ui-confirm` ersetzt; `on*`-Attribute werden verworfen.
 2. JavaScript-Tests für Fokusfalle, Escape, dynamische Matrixzeilen,
    bearbeitbare Zeilen und Block-Inspector ergänzen.
 3. Alle nutzersichtbaren Preset-, Fehler- und Demotexte über
    `flz-ui-components` übersetzbar machen; Editor-Script-Übersetzungen laden.
 4. Semantik, Tastaturführung, Screenreader-Namen, Kontrast und Responsive-
-   Verhalten der Komponentenbibliothek im Browser dokumentiert prüfen.
+   Verhalten der Komponentenbibliothek in einem echten Browser dokumentiert
+   prüfen. Diese visuelle Abnahme ist die verbleibende Release-Nachweislücke.
 
 ## P3
 

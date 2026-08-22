@@ -358,22 +358,6 @@ trait Flz_Ui_Components_Button_Rendering
             return;
         }
 
-        $confirm = 'if (!window.confirm(' . $this->js_string($message) . ')) { return false; }';
-        $attrs['onclick'] = isset($attrs['onclick']) && '' !== trim((string) $attrs['onclick'])
-            ? $confirm . ' ' . (string) $attrs['onclick']
-            : $confirm;
         $attrs['data-flz-ui-confirm'] = $message;
-    }
-
-    /**
-     * Kodiert Text sicher als JavaScript-String für Inline-Eventhandler.
-     */
-    private function js_string(string $value): string
-    {
-        if (function_exists('wp_json_encode')) {
-            return (string) wp_json_encode($value);
-        }
-
-        return (string) json_encode($value, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
     }
 }

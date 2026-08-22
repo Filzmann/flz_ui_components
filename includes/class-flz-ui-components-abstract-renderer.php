@@ -249,6 +249,10 @@ abstract class Flz_Ui_Components_Abstract_Renderer
         foreach ($attrs as $name => $value) {
             $name = $this->safe_token((string) $name);
 
+			if (str_starts_with($name, 'on')) {
+				continue;
+			}
+
             if (false === $value || null === $value) {
                 continue;
             }

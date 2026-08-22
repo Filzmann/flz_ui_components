@@ -345,6 +345,12 @@
     var target = event.target;
     var filterForm = target.closest && target.closest('.flz-ui-table-filter-form');
     var choiceCard = target.closest && target.closest('.flz-ui-choice-card');
+	var submitOnChange = target.closest && target.closest('[data-flz-ui-submit-on-change]');
+
+	if (submitOnChange && target.type !== 'hidden') {
+	  submitFilterForm(target.form || target.closest('form'));
+	  return;
+	}
 
     if (!filterForm || target.type === 'hidden') {
       if (choiceCard) {
@@ -364,6 +370,7 @@
 
   document.addEventListener('click', function (event) {
     var target = event.target;
+    var confirmationButton = target.closest && target.closest('[data-flz-ui-confirm]');
     var editButton = target.closest && target.closest('[data-flz-ui-edit-row]');
     var cancelButton = target.closest && target.closest('[data-flz-ui-cancel-edit-row]');
     var newButton = target.closest && target.closest('[data-flz-ui-show-new-row]');
@@ -373,6 +380,12 @@
     var row;
     var details;
     var panel;
+
+	if (confirmationButton && !window.confirm(confirmationButton.getAttribute('data-flz-ui-confirm'))) {
+	  event.preventDefault();
+	  event.stopImmediatePropagation();
+	  return;
+	}
 
     if (panelOpenButton) {
       event.preventDefault();
