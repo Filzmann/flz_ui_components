@@ -15,6 +15,10 @@ ausgefüllte Browser- und Accessibility-Abnahme sowie ein reproduzierbar
 geprüftes Release-Artefakt. Das Protokoll liegt unter
 `docs/manual-acceptance.md`.
 
+Die lokal reproduzierte JavaScript-Line-Coverage beträgt 54,05 Prozent und ist
+als No-Regression-Ratsche konfiguriert; das Ziel bleibt 85 Prozent. Der
+PHPCOV-/Xdebug-Job ist vorbereitet, die PHP-Baseline wartet auf den Remote-Lauf.
+
 ## P1
 
 1. **Erledigt:** Öffentliche Renderer-, Validator-, Block- und Assetverträge

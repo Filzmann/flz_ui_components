@@ -9,6 +9,8 @@ ergänzt.
 - Reproduzierbare PR-/Main-CI für PHP 8.1 und 8.5 ergänzt.
 - Branchgleiche Verbraucherprüfungen für die drei Fachplugins ergänzt.
 - Formale Lizenz- und Abnahmenachweise in den Delivery-Vertrag aufgenommen.
+- Gepinnte PHP-/JavaScript-Coverage-Jobs und ausführbare JS-Interaktionstests
+  ergänzt; die erste lokale JS-Baseline beträgt 54,05 Prozent.
 
 ## 0.2.0
 
