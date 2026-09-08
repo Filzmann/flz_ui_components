@@ -4,6 +4,9 @@ Alle wesentlichen Änderungen an `flz_ui_components` werden in dieser Datei
 dokumentiert. Ein Datum wird erst bei einer tatsächlichen Veröffentlichung
 ergänzt.
 
+## Unreleased
+
+
 ## 0.2.1-rc.1
 
 - Sichtbare Pluginbeschreibung, Demo-Einleitung und Blockkategorie für den
