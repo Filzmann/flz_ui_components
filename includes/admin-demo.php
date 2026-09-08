@@ -46,7 +46,7 @@ function flz_ui_components_render_admin_demo_page(): void
 
     echo '<div class="wrap flz-ui-demo">';
     echo '<h1>' . esc_html__('FLZ UI Components', 'flz-ui-components') . '</h1>';
-    echo '<p class="flz-ui-demo__intro">' . esc_html__('Gemeinsame, zentral änderbare UI-Bausteine für die eigenen Tagore-Plugins. Die Seite dient als lebende Referenz für Templates und Scripts.', 'flz-ui-components') . '</p>';
+    echo '<p class="flz-ui-demo__intro">' . esc_html__('Gemeinsame, zentral änderbare UI-Bausteine für WordPress-Plugins. Die Seite dient als lebende Referenz für Templates und Scripts.', 'flz-ui-components') . '</p>';
 
     if ($submitted && $result instanceof Flz_Ui_Components_Validation_Result) {
         if ($result->is_valid()) {

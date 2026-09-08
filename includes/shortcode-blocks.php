@@ -69,7 +69,7 @@ function flz_ui_components_register_block_category(array $categories): array
 
     $categories[] = array(
         'slug'  => 'flz-tagore',
-        'title' => __('Tagore / FLZ', 'flz-ui-components'),
+        'title' => __('FLZ', 'flz-ui-components'),
         'icon'  => null,
     );
 

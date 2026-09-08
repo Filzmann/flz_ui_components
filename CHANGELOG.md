@@ -4,7 +4,10 @@ Alle wesentlichen Änderungen an `flz_ui_components` werden in dieser Datei
 dokumentiert. Ein Datum wird erst bei einer tatsächlichen Veröffentlichung
 ergänzt.
 
-## Unreleased
+## 0.2.1-rc.1
+
+- Sichtbare Pluginbeschreibung, Demo-Einleitung und Blockkategorie für den
+  schulunabhängigen Demo-Kandidaten neutralisiert; technische IDs bleiben stabil.
 
 - Reproduzierbare PR-/Main-CI für PHP 8.1 und 8.5 ergänzt.
 - Branchgleiche Verbraucherprüfungen für die drei Fachplugins ergänzt.
