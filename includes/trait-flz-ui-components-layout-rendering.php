@@ -203,6 +203,9 @@ trait Flz_Ui_Components_Layout_Rendering
         if (!empty($args['format'])) {
             $html .= '<p class="flz-ui-csv-panel__format"><strong>' . esc_html__('Format:', 'flz-ui-components') . '</strong> <code>' . esc_html((string) $args['format']) . '</code></p>';
         }
+        if (!empty($args['format_description'])) {
+            $html .= '<p class="flz-ui-csv-panel__format-description">' . wp_kses_post((string) $args['format_description']) . '</p>';
+        }
 
         $html .= '<div class="flz-ui-csv-panel__actions">';
 
@@ -213,6 +216,7 @@ trait Flz_Ui_Components_Layout_Rendering
                     array(
                         'href'  => (string) $export['href'],
                         'label' => isset($export['label']) ? (string) $export['label'] : 'CSV herunterladen',
+                        'hide_label' => false,
                     )
                 );
             }
@@ -424,14 +428,25 @@ trait Flz_Ui_Components_Layout_Rendering
                 'accept' => '.csv',
             )
         );
-        $html .= $this->button_upload(
+        if ( isset( $upload['fields'] ) && is_array( $upload['fields'] ) ) {
+            foreach ( $upload['fields'] as $field ) {
+                if ( is_array( $field ) ) {
+                    $html .= $this->field( $field );
+                }
+            }
+        }
+        $button = isset( $upload['button'] ) && is_array( $upload['button'] ) ? $upload['button'] : array();
+        $button = array_replace_recursive(
             array(
                 'label' => isset($upload['button_label']) ? (string) $upload['button_label'] : 'CSV hochladen',
                 'attrs' => array(
                     'name' => isset($upload['submit_name']) ? (string) $upload['submit_name'] : 'submit_csv',
                 ),
-            )
+            ),
+            $button
         );
+        $button['attrs']['name'] = isset($upload['submit_name']) ? (string) $upload['submit_name'] : 'submit_csv';
+        $html .= $this->button_upload( $button );
         $html .= $this->form_end();
 
         return $html;

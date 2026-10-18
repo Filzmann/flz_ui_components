@@ -261,12 +261,22 @@ $csv_panel = $renderer->csv_panel(
         'title'  => 'CSV-Demo',
         'format' => 'Titel; Datum',
         'export' => array('href' => '#', 'label' => 'CSV herunterladen'),
-        'upload' => array('file_name' => 'demo_csv', 'button_label' => 'CSV importieren'),
+        'upload' => array(
+            'file_name'    => 'demo_csv',
+            'button_label' => 'CSV importieren',
+            'fields'       => array(
+                array('type' => 'checkbox', 'name' => 'dry_run', 'label' => 'Datei nur prüfen', 'checked' => true),
+            ),
+            'button'       => array('hide_label' => false),
+        ),
     )
 );
 flz_ui_components_renderer_assert(false !== strpos($csv_panel, 'flz-ui-csv-panel'), 'CSV Panel rendert keine Panel-Klasse.');
 flz_ui_components_renderer_assert(false !== strpos($csv_panel, 'type="file"'), 'CSV Panel rendert kein Dateifeld.');
 flz_ui_components_renderer_assert(false !== strpos($csv_panel, 'multipart/form-data'), 'CSV Panel setzt kein Multipart-Formular.');
+flz_ui_components_renderer_assert(false !== strpos($csv_panel, 'Datei nur prüfen'), 'CSV Panel rendert keine zusätzliche Prüfoption.');
+flz_ui_components_renderer_assert(false !== strpos($csv_panel, 'name="dry_run"'), 'CSV Panel bindet die zusätzliche Prüfoption nicht an das Upload-Formular.');
+flz_ui_components_renderer_assert(false !== strpos($csv_panel, '<span class="flz-ui-button__label">CSV importieren</span>'), 'CSV Panel kann den sichtbaren Text des Upload-Buttons nicht anfordern.');
 
 $field_matrix = $renderer->field_matrix(
     array(

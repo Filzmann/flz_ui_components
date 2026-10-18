@@ -481,6 +481,33 @@ body.flz-ui-floating-panel-open {
   gap: 1.25rem;
 }
 
+.flz-ui-card-grid--two-columns {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 782px) {
+  .flz-ui-card-grid--two-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.flz-ui-admin-table--compact th,
+.flz-ui-admin-table--compact td {
+  padding: 0.4rem 0.5rem;
+}
+
+.flz-ui-admin-table--compact tbody > tr.flz-ui-editable-row:nth-child(4n + 1) {
+  background: #f6f7f7;
+}
+
+.flz-ui-admin-table--compact tbody > tr.flz-ui-editable-row:nth-child(4n + 3) {
+  background: #fff;
+}
+
+.flz-ui-admin-table--compact tbody > tr.flz-ui-editable-row.is-editing + .flz-ui-editable-row__details {
+  background: rgba(0, 106, 142, 0.035);
+}
+
 .flz-ui-card {
   position: relative;
   display: flex;
