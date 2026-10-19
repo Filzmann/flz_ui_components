@@ -737,6 +737,21 @@ a.flz-ui-card:focus-visible,
   margin: 0;
 }
 
+.flz-ui-editable-row__details-editor {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+.flz-ui-editable-row__details-editor > label {
+  display: block;
+  margin: 0 0 0.35rem;
+  font-weight: 600;
+}
+
+.flz-ui-editable-row__details-editor .wp-editor-wrap {
+  max-width: 100%;
+}
+
 .flz-ui-demo__intro {
   max-width: 56rem;
   color: var(--flz-ui-color-muted);

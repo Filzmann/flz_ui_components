@@ -49,6 +49,14 @@ if (!function_exists('wp_kses_post')) {
     }
 }
 
+if (!function_exists('wp_editor')) {
+    function wp_editor($content, $editor_id, $settings = array())
+    {
+        $name = isset($settings['textarea_name']) ? (string) $settings['textarea_name'] : (string) $editor_id;
+        echo '<textarea name="' . esc_attr($name) . '" id="' . esc_attr($editor_id) . '">' . esc_textarea($content) . '</textarea>';
+    }
+}
+
 if (!function_exists('selected')) {
     function selected($selected, $current, $echo = true)
     {
@@ -178,6 +186,12 @@ $editable_row = $renderer->editable_row(
             ),
         ),
         'details' => array(
+			'editor' => array(
+				'id'    => 'demo-row-note',
+				'name'  => 'registration_note',
+				'label' => 'Hinweis',
+				'value' => '<p>Bitte beachten.</p>',
+			),
             'fields' => array(
                 array(
                     'type'  => 'email',
@@ -200,6 +214,9 @@ flz_ui_components_renderer_assert(false !== strpos($editable_row, 'data-flz-ui-e
 flz_ui_components_renderer_assert(false !== strpos($editable_row, 'data-flz-ui-cancel-edit-row'), 'Editable Row enthält keinen Abbrechen-Trigger.');
 flz_ui_components_renderer_assert(false !== strpos($editable_row, 'form="demo-row-1-form"'), 'Editable Row bindet Felder nicht an das Zeilenformular.');
 flz_ui_components_renderer_assert(false !== strpos($editable_row, 'data-flz-ui-editable-details-for="demo-row-1"'), 'Editable Row rendert keine Detailzeile.');
+flz_ui_components_renderer_assert(false !== strpos($editable_row, 'name="registration_note"'), 'Editable Row rendert keinen Rich-Text-Editor in der Detailzeile.');
+flz_ui_components_renderer_assert(false !== strpos($editable_row, 'form="demo-row-1-form"'), 'Der Rich-Text-Editor ist nicht an das Zeilenformular gebunden.');
+flz_ui_components_renderer_assert(false !== strpos($editable_row, 'data-flz-ui-editable-editor'), 'Der Rich-Text-Editor hat keinen deklarativen Synchronisationsmarker.');
 
 $new_row = $renderer->editable_row(
     array(

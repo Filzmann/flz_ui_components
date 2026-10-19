@@ -22,6 +22,8 @@ foreach (
         'addMatrixRow(',
         "closest('[data-flz-ui-submit-on-change]')",
         'requestSubmit()',
+        'data-flz-ui-editable-editor',
+        'tinyMCE.get(',
     ) as $needle
 ) {
     if (!str_contains($source, $needle)) {

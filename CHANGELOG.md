@@ -6,6 +6,12 @@ ergänzt.
 
 ## Unreleased
 
+## 0.2.1-rc.3
+
+- `editable_row` unterstützt nun einen breiten WordPress-Editor in der
+  Detailzeile; dessen Inhalt wird sicher an den vorhandenen Save-Button der
+  Zeile gebunden.
+
 ## 0.2.1-rc.2
 
 - Editierbare Tabellenzeilen mit der logischen Klasse `alternate` erhalten
