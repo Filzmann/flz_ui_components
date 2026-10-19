@@ -504,6 +504,14 @@ body.flz-ui-floating-panel-open {
   background: #fff;
 }
 
+.flz-ui-admin-table > tbody > tr.flz-ui-editable-row.alternate > td {
+  background: #f6f7f7;
+}
+
+.flz-ui-admin-table > tbody > tr.flz-ui-editable-row:not(.alternate) > td {
+  background: #fff;
+}
+
 .flz-ui-admin-table--compact tbody > tr.flz-ui-editable-row.is-editing + .flz-ui-editable-row__details {
   background: rgba(0, 106, 142, 0.035);
 }

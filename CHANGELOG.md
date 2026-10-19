@@ -6,6 +6,10 @@ ergänzt.
 
 ## Unreleased
 
+## 0.2.1-rc.2
+
+- Editierbare Tabellenzeilen mit der logischen Klasse `alternate` erhalten
+  unabhängig von aufklappbaren Detailzeilen eine explizite Streifenfarbe.
 
 ## 0.2.1-rc.1
 
