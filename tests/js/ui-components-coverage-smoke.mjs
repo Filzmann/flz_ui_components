@@ -156,6 +156,99 @@ assert.equal(stopped, true);
 listeners.get('DOMContentLoaded')[0]();
 listeners.get('keydown')[0]({key: 'Escape'});
 
+const floatingTrigger = new Element('button');
+const floatingDrawer = new Element('section');
+const firstPanelControl = new Element('button');
+const lastPanelControl = new Element('button');
+const floatingPanel = new Element('aside');
+floatingPanel.classList.add('flz-ui-floating-panel');
+floatingPanel.classList.add('is-open');
+floatingPanel.querySelector = (selector) => {
+  if (selector === '[data-flz-ui-floating-panel-open]') return floatingTrigger;
+  if (selector === '.flz-ui-floating-panel__drawer') return floatingDrawer;
+  return null;
+};
+floatingPanel.querySelectorAll = () => [firstPanelControl, lastPanelControl];
+floatingPanel.contains = (element) => element === firstPanelControl || element === lastPanelControl;
+document.querySelectorAll = (selector) => selector === '.flz-ui-floating-panel.is-open' ? [floatingPanel] : [];
+document.querySelector = (selector) => selector === '.flz-ui-floating-panel.is-open' ? floatingPanel : null;
+
+document.activeElement = lastPanelControl;
+let tabPrevented = false;
+listeners.get('keydown')[0]({
+  key: 'Tab',
+  shiftKey: false,
+  preventDefault: () => { tabPrevented = true; }
+});
+assert.equal(tabPrevented, true);
+assert.equal(firstPanelControl.focused, true);
+
+document.activeElement = firstPanelControl;
+let reverseTabPrevented = false;
+listeners.get('keydown')[0]({
+  key: 'Tab',
+  shiftKey: true,
+  preventDefault: () => { reverseTabPrevented = true; }
+});
+assert.equal(reverseTabPrevented, true);
+assert.equal(lastPanelControl.focused, true);
+
+listeners.get('keydown')[0]({key: 'Escape'});
+assert.equal(floatingPanel.classList.contains('is-open'), false);
+assert.equal(floatingTrigger.getAttribute('aria-expanded'), 'false');
+assert.equal(floatingTrigger.focused, true);
+
+const matrixTemplate = new Element('tr');
+const matrixRow = new Element('tr');
+const matrixField = new Element('input');
+matrixField.setAttribute('name', 'slots[__index__][start]');
+matrixField.setAttribute('id', 'slot-__index__');
+matrixField.setAttribute('disabled', 'disabled');
+matrixField.disabled = true;
+matrixRow.querySelectorAll = () => [matrixField];
+matrixRow.querySelector = () => matrixField;
+matrixRow.removeAttribute = Element.prototype.removeAttribute;
+matrixTemplate.cloneNode = () => matrixRow;
+const matrixBody = new Element('tbody');
+matrixBody.setAttribute('data-flz-ui-next-index', '2');
+matrixBody.querySelector = (selector) => selector === '[data-flz-ui-field-matrix-template]' ? matrixTemplate : null;
+matrixBody.insertBefore = (row, template) => { matrixBody.inserted = {row, template}; };
+const matrixButton = new Element('button');
+matrixButton.setAttribute('data-flz-ui-add-matrix-row', 'slots');
+matrixButton.closest = (selector) => selector === '[data-flz-ui-add-matrix-row]' ? matrixButton : null;
+const originalQuerySelector = document.querySelector;
+document.querySelector = (selector) => selector === '[data-flz-ui-field-matrix="slots"]' ? matrixBody : originalQuerySelector(selector);
+let matrixPrevented = false;
+listeners.get('click')[0]({
+  target: matrixButton,
+  preventDefault: () => { matrixPrevented = true; }
+});
+assert.equal(matrixPrevented, true);
+assert.equal(matrixBody.getAttribute('data-flz-ui-next-index'), '3');
+assert.equal(matrixField.getAttribute('name'), 'slots[2][start]');
+assert.equal(matrixField.getAttribute('id'), 'slot-2');
+assert.equal(matrixField.disabled, false);
+assert.equal(matrixField.focused, true);
+assert.equal(matrixBody.inserted.template, matrixTemplate);
+
+const editableRow = new Element('tr');
+const editableField = new Element('input');
+editableRow.querySelector = () => editableField;
+const editButton = new Element('button');
+editButton.closest = (selector) => {
+  if (selector === '[data-flz-ui-edit-row]') return editButton;
+  if (selector === '[data-flz-ui-editable-row]') return editableRow;
+  return null;
+};
+let editPrevented = false;
+listeners.get('click')[0]({
+  target: editButton,
+  preventDefault: () => { editPrevented = true; }
+});
+assert.equal(editPrevented, true);
+assert.equal(editableRow.classList.contains('is-editing'), true);
+assert.equal(editableField.focused, true);
+
 const registered = new Map();
 const createElement = (type, props, ...children) => ({type, props: props || {}, children});
 window.wp = {
@@ -189,3 +282,11 @@ assert.equal(definition.transforms.from[0].attributes.active.shortcode({named: {
 assert.equal(definition.transforms.from[0].attributes.title.shortcode({named: {title: 'Hallo'}}), 'Hallo');
 const rendered = definition.edit({attributes: {title: 'a', active: true}, setAttributes() {}});
 assert.equal(rendered.type, 'fragment');
+
+const inspector = rendered.children[0];
+const inspectorFields = inspector.children[0].children[0];
+assert.equal(inspectorFields[0].type, 'toggle');
+assert.equal(inspectorFields[0].props.checked, true);
+assert.equal(inspectorFields[1].type, 'select');
+assert.deepEqual(inspectorFields[1].props.options, [{label: 'A', value: 'a'}]);
+assert.equal(inspectorFields[2].type, 'text');

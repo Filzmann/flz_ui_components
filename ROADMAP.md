@@ -29,8 +29,9 @@ dem exakten Artefakt. Das Protokoll liegt unter `docs/manual-acceptance.md`.
 
 1. **Erledigt:** Inline-`onclick`/`window.confirm` wurde durch delegierte
    Handler und `data-flz-ui-confirm` ersetzt; `on*`-Attribute werden verworfen.
-2. JavaScript-Tests für Fokusfalle, Escape, dynamische Matrixzeilen,
-   bearbeitbare Zeilen und Block-Inspector ergänzen.
+2. **Erledigt:** JavaScript-Vertragstests prüfen Fokusfalle und Escape im
+   Floating Panel, dynamische Matrixzeilen, bearbeitbare Zeilen sowie
+   Block-Inspector-Werte und -Optionen.
 3. Alle nutzersichtbaren Preset-, Fehler- und Demotexte über
    `flz-ui-components` übersetzbar machen; Editor-Script-Übersetzungen laden.
 4. Semantik, Tastaturführung, Screenreader-Namen, Kontrast und Responsive-
