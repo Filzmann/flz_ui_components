@@ -2,14 +2,14 @@
 /**
  * Plugin Name: FLZ UI Components
  * Description: Gemeinsame UI-Komponenten, Formularfelder und Validierung für WordPress-Plugins.
- * Version: 0.2.1-rc.1
+ * Version: 0.2.1-rc.3
  * Author: Tagore-Gymnasium / Simon
  * Text Domain: flz-ui-components
  */
 
 defined('ABSPATH') || exit;
 
-define('FLZ_UI_COMPONENTS_VERSION', '0.2.1-rc.1');
+define('FLZ_UI_COMPONENTS_VERSION', '0.2.1-rc.3');
 define('FLZ_UI_COMPONENTS_FILE', __FILE__);
 define('FLZ_UI_COMPONENTS_DIR', plugin_dir_path(__FILE__));
 define('FLZ_UI_COMPONENTS_URL', plugins_url('flz_ui_components/'));

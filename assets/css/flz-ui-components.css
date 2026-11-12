@@ -504,6 +504,14 @@ body.flz-ui-floating-panel-open {
   background: #fff;
 }
 
+.flz-ui-admin-table > tbody > tr.flz-ui-editable-row.alternate > td {
+  background: #f6f7f7;
+}
+
+.flz-ui-admin-table > tbody > tr.flz-ui-editable-row:not(.alternate) > td {
+  background: #fff;
+}
+
 .flz-ui-admin-table--compact tbody > tr.flz-ui-editable-row.is-editing + .flz-ui-editable-row__details {
   background: rgba(0, 106, 142, 0.035);
 }
@@ -727,6 +735,21 @@ a.flz-ui-card:focus-visible,
 
 .flz-ui-editable-row__details-grid .flz-ui-field {
   margin: 0;
+}
+
+.flz-ui-editable-row__details-editor {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+.flz-ui-editable-row__details-editor > label {
+  display: block;
+  margin: 0 0 0.35rem;
+  font-weight: 600;
+}
+
+.flz-ui-editable-row__details-editor .wp-editor-wrap {
+  max-width: 100%;
 }
 
 .flz-ui-demo__intro {

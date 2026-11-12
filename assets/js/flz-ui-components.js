@@ -246,6 +246,22 @@
     });
   }
 
+  function syncEditableRowEditors(form) {
+    if (!form || !form.id) {
+      return;
+    }
+
+    document.querySelectorAll('[data-flz-ui-editable-editor="' + form.id + '"]').forEach(function (textarea) {
+      if (window.tinyMCE && typeof window.tinyMCE.get === 'function') {
+        var editor = window.tinyMCE.get(textarea.id);
+
+        if (editor && typeof editor.save === 'function') {
+          editor.save();
+        }
+      }
+    });
+  }
+
   function showNewRow(rowId) {
     var row = document.getElementById(rowId);
     var details;
@@ -439,6 +455,16 @@
         setEditableRowMode(row, false);
       }
     }
+  });
+
+  document.addEventListener('submit', function (event) {
+    var form = event.target;
+
+    if (!form || !form.matches || !form.matches('[data-flz-ui-editable-form]')) {
+      return;
+    }
+
+    syncEditableRowEditors(form);
   });
 
   document.addEventListener('keydown', function (event) {

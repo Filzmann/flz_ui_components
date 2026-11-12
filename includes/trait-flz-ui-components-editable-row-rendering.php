@@ -210,6 +210,10 @@ trait Flz_Ui_Components_Editable_Row_Rendering
 
         $html .= '<div class="flz-ui-editable-row__details-grid">';
 
+        if (!empty($details['editor']) && is_array($details['editor'])) {
+            $html .= $this->editable_row_details_editor((array) $details['editor'], $form_id);
+        }
+
         if (!empty($details['fields']) && is_array($details['fields'])) {
             foreach (array_values($details['fields']) as $index => $field) {
                 if (!is_array($field)) {
@@ -227,6 +231,58 @@ trait Flz_Ui_Components_Editable_Row_Rendering
         $html .= '</div>';
         $html .= '</td>';
         $html .= '</tr>';
+
+        return $html;
+    }
+
+    /**
+     * Rendert einen WordPress-Editor als breites Detailfeld einer Editable Row.
+     *
+     * Der von WordPress ausgegebene Textbereich wird explizit an das vorhandene
+     * Zeilenformular gebunden. Das zugehörige JavaScript speichert vor dem
+     * Absenden einen gegebenenfalls aktiven TinyMCE-Inhalt zurück in den
+     * Textbereich.
+     *
+     * @param array<string,mixed> $editor Editorargumente.
+     */
+    private function editable_row_details_editor(array $editor, string $form_id): string
+    {
+        $id = isset($editor['id']) ? $this->safe_token((string) $editor['id']) : '';
+        $name = isset($editor['name']) ? (string) $editor['name'] : '';
+
+        if ('' === $id || '' === $name || !function_exists('wp_editor')) {
+            throw new InvalidArgumentException('flz_ui editable_row editor benötigt id, name und die WordPress-Editor-API.');
+        }
+
+        $settings = isset($editor['settings']) && is_array($editor['settings']) ? $editor['settings'] : array();
+        $settings['textarea_name'] = $name;
+
+        ob_start();
+        wp_editor(isset($editor['value']) ? (string) $editor['value'] : '', $id, $settings);
+        $editor_html = (string) ob_get_clean();
+        $editor_pattern = '/<textarea(?=[^>]*\\bid=["\\\']' . preg_quote($id, '/') . '["\\\'])[^>]*>/';
+        $bound_editor_html = preg_replace_callback(
+            $editor_pattern,
+            static function (array $match) use ($form_id): string {
+                return substr($match[0], 0, -1)
+                    . ' form="' . esc_attr($form_id) . '"'
+                    . ' data-flz-ui-editable-editor="' . esc_attr($form_id) . '">';
+            },
+            $editor_html,
+            1
+        );
+
+        if (!is_string($bound_editor_html) || $bound_editor_html === $editor_html) {
+            throw new RuntimeException('flz_ui editable_row konnte den WordPress-Editor nicht an das Zeilenformular binden.');
+        }
+
+        $label = isset($editor['label']) ? (string) $editor['label'] : '';
+        $html = '<div class="flz-ui-editable-row__details-editor">';
+        if ('' !== $label) {
+            $html .= '<label for="' . esc_attr($id) . '">' . esc_html($label) . '</label>';
+        }
+        $html .= $bound_editor_html;
+        $html .= '</div>';
 
         return $html;
     }
@@ -274,6 +330,7 @@ trait Flz_Ui_Components_Editable_Row_Rendering
         $form = isset($args['form']) && is_array($args['form']) ? $args['form'] : array();
         $attrs = isset($form['attrs']) && is_array($form['attrs']) ? $form['attrs'] : array();
         $attrs['id'] = $form_id;
+		$attrs['data-flz-ui-editable-form'] = true;
 
         $form['attrs'] = $attrs;
         $form['class'] = $this->classes(
